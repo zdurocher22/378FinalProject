@@ -1,0 +1,13 @@
+"0","library(palmerpenguins)"
+"0","library(dplyr)"
+"0","library(dbplyr)"
+"0","library(ggplot2)"
+"0","library(duckdb)"
+"0","library(vctrs)"
+"0","library(DBI)"
+"0","con <- DBI::dbConnect("
+"0","  duckdb::duckdb(), "
+"0","  dbdir = ""my-db.duckdb"""
+"0","  )"
+"2","Error: rapi_startup: Failed to open database: IO Error: Cannot open file ""my-db.duckdb"": The process cannot access the file because it is being used by another process.
+"

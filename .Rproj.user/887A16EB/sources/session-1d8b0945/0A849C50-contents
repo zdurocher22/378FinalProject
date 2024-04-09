@@ -1,0 +1,2 @@
+docker run -it -t --volume C:\Users\zduro\OneDrive\Desktop\Academics\M  Math 378\378 Final Project\FinalProject378Durocher\data:/data/model  -p 8080:8080
+--net=penguin-network   penguin-model-api:latest

@@ -1,0 +1,86 @@
+"0","app.run(port = 8080)
+"
+"2","C:\Users\zduro\OneDrive\Desktop\ACADEM~1\MMATH3~3\378FIN~1\FINALP~1\VENV~1\Lib\site-packages\vetiver\utils.py:18: UserWarning: You may be running from a notebook environment. Jupyter Notebooks are not considered stable environments for production code
+  warnings.warn(
+"
+"2","INFO:     Started server process [12168]
+"
+"2","INFO:     Waiting for application startup.
+"
+"2","INFO:     VetiverAPI starting...
+"
+"2","INFO:     Application startup complete.
+"
+"2","INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+"
+"1","INFO:     127.0.0.1:59522 - ""GET / HTTP/1.1"" 307 Temporary Redirect
+"
+"1","INFO:     127.0.0.1:59522 - ""GET /__docs__ HTTP/1.1"" 200 OK
+"
+"1","INFO:     127.0.0.1:59522 - ""GET /openapi.json HTTP/1.1"" 200 OK
+"
+"1","INFO:     127.0.0.1:59522 - ""GET /favicon.ico HTTP/1.1"" 404 Not Found
+"
+"2","INFO:     Shutting down
+"
+"2","INFO:     Waiting for application shutdown.
+"
+"2","INFO:     Application shutdown complete.
+INFO:     Finished server process [12168]
+"
+"0","quit"
+"0","shiny::runApp('NewAppPenguins')"
+"2","Registered S3 methods overwritten by 'htmltools':
+  method               from         
+  print.html           tools:rstudio
+  print.shiny.tag      tools:rstudio
+  print.shiny.tag.list tools:rstudio
+"
+"2","Loading required package: shiny
+"
+"2","
+Listening on http://127.0.0.1:4548
+"
+"2","Warning:"
+"2"," Error in httr2::req_perform: Failed to perform HTTP request.
+[1mCaused by error in `curl::curl_fetch_memory()`:[22m
+[33m![39m Failed to connect to 127.0.0.1 port 8080 after 2022 ms: Couldn't connect to server
+"
+"2","  151: [37m<Anonymous>[39m
+"
+"2",""
+"2","  150: [37msignalCondition[39m
+"
+"2",""
+"2","  149: [37msignal_abort[39m
+"
+"2",""
+"2","  148: [37mcnd_signal[39m
+"
+"2",""
+"2","  147: [37mhandle_resp[39m
+"
+"2",""
+"2","  146: [37mhttr2::req_perform[39m
+"
+"2",""
+"2","  142: [37meventReactiveValueFunc[39m
+"
+"2",""
+"2","   98: [90mpred [C:/Users/zduro/AppData/Local/Temp/RtmpUBA3o1/R.INSTALL31a837c0577e/shiny/R/reactives.R#870][39m
+"
+"2",""
+"2","   97: [37mrenderText[39m
+"
+"2",""
+"2","   96: [90mfunc [C:/Users/zduro/AppData/Local/Temp/RtmpUBA3o1/R.INSTALL31a837c0577e/shiny/R/utils.R#1455][39m
+"
+"2",""
+"2","   83: [90mrenderFunc [C:/Users/zduro/AppData/Local/Temp/RtmpUBA3o1/R.INSTALL31a837c0577e/shiny/R/shinywrappers.R#263][39m
+"
+"2",""
+"2","   82: [90moutput$pred [C:/Users/zduro/AppData/Local/Temp/RtmpUBA3o1/R.INSTALL31a837c0577e/shiny/R/shinywrappers.R#133][39m
+"
+"2",""
+"2","    1: [90mshiny::runApp [C:/Users/zduro/AppData/Local/Temp/RtmpUBA3o1/R.INSTALL31a837c0577e/shiny/R/runapp.R#388][39m
+"

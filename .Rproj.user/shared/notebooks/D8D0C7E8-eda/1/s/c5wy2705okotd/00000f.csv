@@ -1,0 +1,15 @@
+"0","df %>%"
+"0","  ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +"
+"0","  geom_point() + "
+"0","  geom_smooth(method = ""lm"")"
+"1","[1m[33mError[39m in `dplyr::collect()`:[22m
+[1m[22m[33m![39m Failed to collect lazy table.
+[1mCaused by error:[22m
+[33m![39m rapi_execute: Failed to run query
+Error: INTERNAL Error: Unsupported compression function type
+Backtrace:
+[90m 1. [39mdf %>% ...
+[90m 3. [39mggplot2:::ggplot.default(...)
+[90m 5. [39mggplot2:::fortify.tbl(data, ...)
+[90m 7. [39m[1m[94mdbplyr:::collect.tbl_sql([39m[22mmodel[1m[94m)[39m[22m
+"

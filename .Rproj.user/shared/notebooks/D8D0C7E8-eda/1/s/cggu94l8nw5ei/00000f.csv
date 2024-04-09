@@ -1,0 +1,7 @@
+"0","DBI::dbDisconnect(con)    # this disconnects from the database, apparently
+"
+"2","Warning: Connection already closed."
+"2","Warning message:
+"
+"2","Database is garbage-collected, use dbDisconnect(con, shutdown=TRUE) or duckdb::duckdb_shutdown(drv) to avoid this. 
+"

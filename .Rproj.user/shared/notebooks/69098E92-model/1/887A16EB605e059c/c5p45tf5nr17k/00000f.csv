@@ -1,0 +1,22 @@
+"0","app.run(port = 8080)
+"
+"2","C:\Users\zduro\OneDrive\Desktop\ACADEM~1\MMATH3~3\378FIN~1\FINALP~1\VENV~1\Lib\site-packages\vetiver\utils.py:18: UserWarning: You may be running from a notebook environment. Jupyter Notebooks are not considered stable environments for production code
+  warnings.warn(
+"
+"2","INFO:     Started server process [18616]
+"
+"2","INFO:     Waiting for application startup.
+INFO:     VetiverAPI starting...
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+"
+"1","INFO:     127.0.0.1:62775 - ""GET / HTTP/1.1"" 307 Temporary Redirect
+"
+"1","INFO:     127.0.0.1:62775 - ""GET /__docs__ HTTP/1.1"" 200 OK
+"
+"1","INFO:     127.0.0.1:62775 - ""GET /openapi.json HTTP/1.1"" 200 OK
+"
+"1","INFO:     127.0.0.1:62775 - ""GET /favicon.ico HTTP/1.1"" 404 Not Found
+"
+"1","INFO:     127.0.0.1:62796 - ""POST /predict HTTP/1.1"" 200 OK
+"

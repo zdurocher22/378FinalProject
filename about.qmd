@@ -1,0 +1,13 @@
+---
+title: "About"
+---
+
+This is the about page.
+
+It's stored as 'about.qmd' in the root directory of the FinalProject378Durocher project, which just means that it's in the same folder.
+
+I'm still learning how to make a Quarto website.
+
+Here are some useful commands:
+
+

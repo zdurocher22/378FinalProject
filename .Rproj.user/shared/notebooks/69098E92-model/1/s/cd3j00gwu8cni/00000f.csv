@@ -1,0 +1,6 @@
+"0","vetiver.prepare_docker(b, ""penguin_model"")
+"
+"2","C:\Users\zduro\OneDrive\Desktop\ACADEM~1\MMATH3~3\378FIN~1\FINALP~1\VENV~1\Lib\site-packages\vetiver\attach_pkgs.py:77: UserWarning: required packages unknown for board protocol: ('file', 'local'), add to model's metadata to export
+  warnings.warn(
+"
+"0",""

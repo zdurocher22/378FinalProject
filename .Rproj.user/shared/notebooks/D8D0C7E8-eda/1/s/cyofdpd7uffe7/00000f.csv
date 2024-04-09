@@ -1,0 +1,54 @@
+"0","library(palmerpenguins)"
+"0","library(dplyr)"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","library(dbplyr)"
+"2","Registered S3 methods overwritten by 'dbplyr':
+  method         from
+  print.tbl_lazy     
+  print.tbl_sql      
+"
+"2","
+Attaching package: ‘dbplyr’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    ident, sql
+
+"
+"0","library(ggplot2)"
+"0","library(duckdb)"
+"2","Loading required package: DBI
+"
+"0","library(vctrs)"
+"2","
+Attaching package: ‘vctrs’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    data_frame
+
+"
+"0","library(DBI)"
+"0","con <- DBI::dbConnect("
+"0","  duckdb::duckdb(), "
+"0","  dbdir = ""my-db.duckdb"""
+"0","  )"
+"0","df <- dplyr::tbl(con, ""penguins"")"
+"2","Warning:"
+"2"," Database is garbage-collected, use dbDisconnect(con, shutdown=TRUE) or duckdb::duckdb_shutdown(drv) to avoid this.
+"
