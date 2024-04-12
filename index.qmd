@@ -1,0 +1,15 @@
+---
+title: "FinalProject378Durocher"
+---
+
+This is a Quarto website.
+
+The file associated with this page is 'index.qmd'
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+Look, I can run code and have it appear in the website!
+
+```{r}
+1 + 1
+```
