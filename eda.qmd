@@ -55,7 +55,6 @@ df %>%
   dplyr::collect() %>% 
   knitr::kable()
 
-DBI::dbDisconnect(con, shutdown=TRUE)
 ```
 
 ```{r}
