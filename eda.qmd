@@ -17,7 +17,7 @@ library(vctrs)
 library(DBI)
 
 con <- DBI::dbConnect(duckdb::duckdb(), dbdir = "my-db.duckdb")
-DBI::dbWriteTable(con, "penguins", palmerpenguins::penguins,overwrite = TRUE)
+DBI::dbWriteTable(con, "penguins", palmerpenguins::penguins,append = TRUE)
 
 df <- dplyr::tbl(con, "penguins")
 
