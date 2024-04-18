@@ -16,12 +16,40 @@ library(duckdb)
 library(vctrs)
 library(DBI)
 
+```
+
+```{r}
+df <- palmerpenguins::penguins
+df %>%
+  group_by(species, sex) %>%
+  summarise(
+    across(
+      where(is.numeric), 
+      \(x) mean(x, na.rm = TRUE)
+      ), .groups = "drop"
+    ) %>%
+  knitr::kable()
+```
+
+
+## Penguin Size vs Mass by Species  -- plot some stuff
+
+```{r}
+df %>%
+  ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+```
+
+```{r}
+# this part doesn't actually contribute anything, but it is here
 con <- DBI::dbConnect(duckdb::duckdb(), dbdir = "my-db.duckdb")
 DBI::dbWriteTable(con, "penguins", palmerpenguins::penguins,append = TRUE)
 
 df <- dplyr::tbl(con, "penguins")
-
 ```
+
 
 ```{r} 
 df %>%
@@ -35,33 +63,23 @@ df %>%
   dplyr::collect() %>% 
   knitr::kable()
 
-```
-
-## Penguin Size vs Mass by Species  -- plot some stuff
-
-```{r}
-df %>%
-  ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +
-  geom_point() + 
-  geom_smooth(method = "lm")
-
-
+DBI::dbDisconnect(con, shutdown=TRUE)
 ```
 
 ```{r}
-library(httr2)
-req <- httr2::request("http://127.0.0.1:8080/predict") |>
-  httr2::req_body_json(
-    list(
-      list(
-        "bill_length_mm" = 0,
-        "species_Chinstrap" = FALSE,
-        "species_Gentoo" = FALSE,
-        "sex_male" = FALSE
-      )
-    )
-  ) |>
-  httr2::req_perform()
-res <- httr2::resp_body_json(req)$predict[[1]]
+#library(httr2)
+#req <- httr2::request("http://127.0.0.1:8080/predict") |>
+#  httr2::req_body_json(
+#    list(
+#      list(
+#        "bill_length_mm" = 0,
+#        "species_Chinstrap" = FALSE,
+#        "species_Gentoo" = FALSE,
+#        "sex_male" = FALSE
+#      )
+#    )
+#  ) |>
+#  httr2::req_perform()
+#res <- httr2::resp_body_json(req)$predict[[1]]
 ```
 
