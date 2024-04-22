@@ -7,7 +7,7 @@ format:
 
 ## Penguin Size and Mass by Sex and Species
 
-``` {r}
+```{r}
 library(palmerpenguins)
 library(dplyr)
 library(dbplyr)
@@ -15,44 +15,21 @@ library(ggplot2)
 library(duckdb)
 library(vctrs)
 library(DBI)
+library(purrr)
+library(broom)
+library(tidyr)
 
-```
-
-```{r}
-df <- palmerpenguins::penguins
-df %>%
-  group_by(species, sex) %>%
-  summarise(
-    across(
-      where(is.numeric), 
-      \(x) mean(x, na.rm = TRUE)
-      ), .groups = "drop"
-    ) %>%
-  knitr::kable()
-```
-
-
-## Penguin Size vs Mass by Species  -- plot some stuff
-
-```{r}
-df %>%
-  ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +
-  geom_point() + 
-  geom_smooth(method = "lm")
-
-```
-
-
-```{r}
-# this part doesn't actually contribute anything, but it is here
 con <- DBI::dbConnect(duckdb::duckdb(), dbdir = "my-db.duckdb")
-DBI::dbWriteTable(con, "penguins", palmerpenguins::penguins,append = TRUE)
+DBI::dbWriteTable(con, "penguins", palmerpenguins::penguins,overwrite = TRUE)
 
 df <- dplyr::tbl(con, "penguins")
+
 ```
 
+```{r}
+data("penguins")
+df <- penguins
 
-```{r} 
 df %>%
   group_by(species, sex) %>%
   summarise(
@@ -64,23 +41,168 @@ df %>%
   dplyr::collect() %>% 
   knitr::kable()
 
-DBI::dbDisconnect(con, shutdown=TRUE)
+```
+
+## Penguin Size vs Mass by Species -- exploratory data analysis
+
+```{r}
+# Load required libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(purrr)
+library(broom)
+
+# Load Palmer Penguins dataset
+data("penguins")
+df <- penguins
+
+# Summary statistics by species and sex
+summary_table <- df %>%
+  group_by(species, sex) %>%
+  summarise(
+    across(
+      ends_with("mm") | ends_with("g"),
+      \(x) mean(x, na.rm = TRUE)
+    ), .groups = "drop"
+  ) %>%
+  collect()
+
+# Visualizing penguin size vs. mass by species
+p1 <- df %>%
+  ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  labs(title = "Penguin Size vs. Mass by Species",
+       x = "Bill Length (mm)",
+       y = "Body Mass (g)")
+
+# Boxplot for differences in body mass between species and sexes
+p2 <- df %>%
+  ggplot(aes(x = species, y = body_mass_g, fill = sex)) +
+  geom_boxplot() +
+  labs(title = "Differences in Body Mass Between Species and Sexes",
+       x = "Species",
+       y = "Body Mass (g)",
+       fill = "Sex")
+
+# Correlation analysis
+correlation_matrix <- cor(select(df, ends_with("mm"), ends_with("g")), use = "complete.obs")
+
+# Linear regression modeling
+lm_results <- df %>%
+  nest(data = -c(species, sex)) %>%
+  mutate(model = map(data, ~ lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = .)),
+         tidy = map(model, tidy)) %>%
+  unnest(tidy)
+
+# Interaction effects analysis
+interaction_model <- lm(body_mass_g ~ species * sex + bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)
+interaction_effects <- tidy(interaction_model)
+
+# Outlier detection
+outlier_model <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = df)
+outlier_df <- augment(outlier_model)
+
+# Model evaluation
+model_evaluation <- glance(outlier_model)
+
+# Print summary statistics table
+print(summary_table)
+
+# Print correlation matrix
+print(correlation_matrix)
+
+# Print linear regression results
+print(lm_results)
+
+# Print interaction effects
+print(interaction_effects)
+
+# Print outlier detection results
+print(outlier_df)
+
+# Print model evaluation metrics
+print(model_evaluation)
+
+# Visualize plots
+print(p1)
+print(p2)
+
 ```
 
 ```{r}
-#library(httr2)
-#req <- httr2::request("http://127.0.0.1:8080/predict") |>
-#  httr2::req_body_json(
-#    list(
-#      list(
-#        "bill_length_mm" = 0,
-#        "species_Chinstrap" = FALSE,
-#        "species_Gentoo" = FALSE,
-#        "sex_male" = FALSE
-#      )
-#    )
-#  ) |>
-#  httr2::req_perform()
-#res <- httr2::resp_body_json(req)$predict[[1]]
+# predicting mass based off of sex and species using a decision tree
+# Load required libraries
+library(rpart)
+
+# Load Palmer Penguins dataset
+data("penguins")
+df <- penguins
+
+# Remove rows with missing values (this is important)
+df <- na.omit(df)
+
+# Fit decision tree model
+tree_model <- rpart(body_mass_g ~ species + sex, data = df)
+
+# Visualize tree
+plot(tree_model)
+text(tree_model)
+
+# Print the summary of the model
+summary(tree_model)
+
+
+# Load required library - Time to use a more complex method
+library(randomForest)
+
+# Fit random forest model with bagging
+bagging_model <- randomForest(body_mass_g ~ ., data = df, ntree = 500)
+
+# Print the summary of the model
+print(bagging_model)
+
+# Plot variable importance
+varImpPlot(bagging_model)
 ```
 
+```{r}
+library(rpart)    # we need more libraries
+library(randomForest)
+library(caret)
+
+# Load Palmer Penguins dataset again just in case
+data("penguins")
+df <- na.omit(penguins)  # Remove rows missing values
+
+formula <- body_mass_g ~ .
+
+# Create train and test sets
+set.seed(123)  # Set seed for reproducibility
+train_indices <- createDataPartition(df$body_mass_g, p = 0.7, list = FALSE)
+train_df <- df[train_indices, ]
+test_df <- df[-train_indices, ]
+
+# Fit rpart model
+rpart_model <- rpart(formula, data = train_df)
+rpart_pred <- predict(rpart_model, test_df)
+
+# Fit random forest model
+rf_model <- randomForest(formula, data = train_df)
+rf_pred <- predict(rf_model, test_df)
+
+# Fit linear regression model
+lm_model <- lm(formula, data = train_df)
+lm_pred <- predict(lm_model, test_df)
+
+# Calculate MSQ error for each model
+rpart_accuracy <- mean((rpart_pred - test_df$body_mass_g)^2)
+rf_accuracy <- mean((rf_pred - test_df$body_mass_g)^2)
+lm_accuracy <- mean((lm_pred - test_df$body_mass_g)^2)
+
+cat("Accuracy of rpart model:", rpart_accuracy, "\n")
+cat("Accuracy of random forest model:", rf_accuracy, "\n")
+cat("Accuracy of linear regression model:", lm_accuracy, "\n")
+
+```
